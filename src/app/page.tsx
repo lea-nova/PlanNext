@@ -1,7 +1,7 @@
 'use client'
 // import { useState } from "react";
 // import Image from "next/image";
-import Navbar  from "../components/Navbar/page";
+import Navbar from "../components/Navbar/page";
 import Button from "../components/button/Button";
 
 // import Task from "./task/Task";
@@ -16,24 +16,24 @@ const Home: React.FC = () => {
   //   localStorage.setItem("test", favoriteNumber);
   // }
   // let valueInLocalStorage = localStorage.getItem("test");
-    return (<div>
-      <Navbar />
+  return (<div>
+    <Navbar />
     <h1 className="font-bold text-4xl text-center">Plan Next</h1>
     {/* <h2 className="font-semibold text-3xl text-center"> La clé d’une gestion efficace</h2> */}
     {/* <Button /> */}
     <section className="flex flex-col md:h-[40rem] items-center justify-center">
-    <span className=" md:w-[35%] flex justify-between  ">
-      {/* <Link href="/tasks">
+      <span className=" md:w-[35%] flex justify-between  ">
+        {/* <Link href="/tasks">
 <a>Voir toutes les listes</a>
       </Link> */}
-    <Button text="Nouvelle liste" route="/tasks/new" variant="purple" />
-    
-    <Button text="Voir toutes les listes"  route="/tasks" variant="white"/>
+        <Button route="/tasks/new" title="Nouvelle" className="bg-slate-400" variant="purple" >Nouvelle liste</Button>
 
-    </span>
+        <Button title="Toutes les listes" route="/tasks" variant="white">Voir toutes les listes</Button>
+
+      </span>
     </section>
-    </div>
+  </div >
   );
 }
 export default Home;
-  
+
