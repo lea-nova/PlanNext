@@ -36,9 +36,9 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
-# Taskify - La clé d'une gestion efficace. 
+# Plan Next Task. 
 
-**Taskify** est une application simple de gestion de tâches permettant aux utilisateurs d'ajouter, modifier, supprimer et filtrer leurs tâches. 
+**Plan Next Task** est une application simple de gestion de tâches permettant aux utilisateurs d'ajouter, modifier, supprimer et filtrer leurs tâches. 
 
 ## Stack :
 - **React**, 
