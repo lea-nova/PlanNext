@@ -1,7 +1,8 @@
 'use client'
 
-import { title } from 'process';
+// import { title } from 'process';
 import { useState, useEffect, useCallback } from 'react';
+import Button from '../button/Button';
 
 const TitleInput = () => {
     const [titleTask, setTitleTask] = useState<string>('');
@@ -33,7 +34,7 @@ const TitleInput = () => {
 
             <input className="text-black h-[3rem] w-2/3 md:w-1/6   bg-gray-100 rounded-sm focus:border-purple-500 focus:border-2      " placeholder="Ecrivez ici le titre de la liste" type="text" id="title-task" value={titleTask} onChange={handleChange} required />
 
-            <button type="submit" className=" mx-5 px-5 bg-purple-700 font-semibold text-white font-xl rounded-md h-[3rem]">Ajouter un titre</button>
+            {/* <Button  title="Ajoutez"/> */}
         </form>
         <div>
             {/* <h2> {displayOnClick ? displayOnClick : ''}</h2> */}

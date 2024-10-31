@@ -5,7 +5,7 @@ import { useCallback, useMemo } from "react";
 
 
 interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick' | 'type'> {
-    variant: 'white' | 'purple' | '';
+    variant?: 'white' | 'purple' | '';
     route: string;
 
 }
@@ -21,18 +21,17 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
     // useCallback permet d'éviter de recréer une fonction à chaque render.
     const redirectToPage = useCallback(() => {
         router.push(route);
-    }, [route])
+    }, [router, route])
     // useMemo ne change qu'une fois on change variant. 
     const buttonClass = useMemo(() => {
         const klass: string[] = [];
-
         switch (variant) {
             case "white":
                 klass.push("bg-gray-800 text-black hover:bg-gray-900");
                 break;
             case "purple":
             default:
-                klass.push("bg-purple-600 hover:bg-purple-700 text-black");
+                klass.push("bg-purple-600 hover:bg-slate-600 text-black");
                 break;
         }
         klass.push("h-[4rem]  w-[9rem] rounded-md text-white text-lg font-medium");

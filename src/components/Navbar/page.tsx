@@ -1,20 +1,28 @@
-import Image from 'next/image'
+import Link from "next/link";
+import Logo from "../Logo/Logo";
 
 const Navbar = () => {
 
     return (
         <div >
             <header className="bg-slate-900 h-[5rem] flex items-center mb-10 ">
-                <a href="/">
-                    <Image
-                        width={50}
-                        height={50}
-                        className="rounded-full ml-5 "
+                <nav>
+
+                    {/* <a href="/"
                         title="Retour à l'accueil"
-                        src={`/images/plan_next.jpeg`}
-                        alt="logo de Plan Next"
-                    />
-                </a>
+                    > */}
+                    <Link href="/" title="Retour à l'accueil.">
+                        <Logo
+                            alt="Logo de l'application Plan Next"
+                            src="/images/plan_next.jpeg"
+                            className="rounded-full ml-5 "
+                            width={50}
+                            height={50}
+                            style={{ objectFit: "contain" }}
+                        />
+                    </Link>
+                    {/* </a> */}
+                </nav>
             </header>
         </div>
     )

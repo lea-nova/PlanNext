@@ -1,4 +1,5 @@
 'use client'
+
 // import { useState } from "react";
 // import Image from "next/image";
 import Navbar from "../components/Navbar/page";
@@ -17,7 +18,7 @@ const Home: React.FC = () => {
   // }
   // let valueInLocalStorage = localStorage.getItem("test");
   return (<div>
-    <Navbar />
+    {/* <Navbar /> */}
     <h1 className="font-bold text-4xl text-center">Plan Next</h1>
     {/* <h2 className="font-semibold text-3xl text-center"> La clé d’une gestion efficace</h2> */}
     {/* <Button /> */}
@@ -26,12 +27,13 @@ const Home: React.FC = () => {
         {/* <Link href="/tasks">
 <a>Voir toutes les listes</a>
       </Link> */}
-        <Button route="/tasks/new" title="Nouvelle" className="bg-slate-400" variant="purple" >Nouvelle liste</Button>
+        <Button route="/create" title="Nouvelle" className="bg-slate-500" variant="purple" >Nouvelle liste</Button>
 
         <Button title="Toutes les listes" route="/tasks" variant="white">Voir toutes les listes</Button>
 
       </span>
     </section>
+    {/* <ToDoList todo="Bonjour" tab="Suivante"/> */}
   </div >
   );
 }

@@ -1,7 +1,9 @@
+// layout : réutiliser la mise en page. 
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import React from "react";
+import Navbar from "@/components/Navbar/page";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -31,11 +33,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Navbar/>
         <main className=" h-screen flex flex-col ">
           {children}
 
         </main>
-        <footer> <p>&copy; 2024 Taskify. Tous droits réservés.</p></footer>
+        <footer> <p>&copy; 2024 PlanNext.</p></footer>
       </body>
     </html>
   );
