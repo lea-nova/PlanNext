@@ -4,23 +4,28 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 
 
-interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick' | 'type'> {
+interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
     variant?: 'white' | 'purple' | '';
-    route: string;
+    route?: string;
 
 }
 // ... destructuration d'un object, spread/rest
 const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
     variant,
     route,
+    onClick,
     children = "Cliquez ici",
     className = "",
     ...buttonProps
 }) => {
     const router = useRouter();
     // useCallback permet d'éviter de recréer une fonction à chaque render.
-    const redirectToPage = useCallback(() => {
-        router.push(route);
+    const redirectToPage = useCallback<React.MouseEventHandler<HTMLButtonElement>>((e) => {
+        // appelle fonction que si existe
+        onClick?.(e)
+        if (route) {
+            router.push(route);
+        }
     }, [router, route])
     // useMemo ne change qu'une fois on change variant. 
     const buttonClass = useMemo(() => {

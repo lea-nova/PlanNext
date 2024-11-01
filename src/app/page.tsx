@@ -27,6 +27,7 @@ const Home: React.FC = () => {
         {/* <Link href="/tasks">
 <a>Voir toutes les listes</a>
       </Link> */}
+
         <Button route="/create" title="Nouvelle" className="bg-slate-500" variant="purple" >Nouvelle liste</Button>
 
         <Button title="Toutes les listes" route="/tasks" variant="white">Voir toutes les listes</Button>
