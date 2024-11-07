@@ -1,17 +1,25 @@
 'use client'
-import Navbar from "@/components/Navbar/page";
+
 import ListContext from "@/context/list";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
+
+interface Task {
+  id: number,
+  content: string
+}
+
 
 const Create = () => {
   const { addList } = useContext(ListContext)!
 
   const [newListTitle, setNewListTitle] = useState<string>('');
+  const [tasks, setTasks] = useState<Task[]>([]);
+  // const [newTask, setNewTask] = useState<string[]>([]);
 
 
   const handleAddList = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addList({ title: newListTitle });
+    addList({ title: newListTitle, tasks: tasks });
     setNewListTitle('');
   };
 

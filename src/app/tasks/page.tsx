@@ -3,10 +3,15 @@ import Button from "@/components/button/Button";
 import { useContext, useMemo, useState } from "react";
 import { Plus } from 'lucide-react';
 import { X } from 'lucide-react';
-import { list } from "postcss";
+
 import ListContext from "@/context/list";
+
 // import Link from "next/link";
 
+interface Task {
+  id: number,
+  content: string
+}
 
 const TasksLists: React.FC = ({ }) => {
   // Tableau pour stocker toutes les listes de tâches. 
@@ -14,13 +19,13 @@ const TasksLists: React.FC = ({ }) => {
   const { addList, lists, removeList } = useContext(ListContext)!;
 
   const memoLists = useMemo(() => lists, [lists]);
-  console.log(lists);
-  const [newListTitle, setNewListTitle] = useState<string>('');
 
+  const [newListTitle, setNewListTitle] = useState<string>('');
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   const handleAddList = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addList({ title: newListTitle });
+    addList({ title: newListTitle, tasks: tasks });
     setNewListTitle('');
   };
 
@@ -59,6 +64,7 @@ const TasksLists: React.FC = ({ }) => {
                     className=" w-[3rem]  text-sm bg-red-200 hover:bg-red-300">
                     <X className="m-auto text-black" />
                   </Button>
+
                 </span>
               </div>
             </li>

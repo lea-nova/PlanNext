@@ -49,7 +49,7 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
             // a mettre en haut, à juger selon le contexte tout ce qui est écrasé en dessus tout le reste en dessous. 
             {...buttonProps}
             className={buttonClass}
-            type="button"
+            type='button'
             onClick={redirectToPage}
         >
             {children}
