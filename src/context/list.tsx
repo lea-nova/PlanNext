@@ -79,6 +79,25 @@ export const ListContextProvider = ({ children }: PropsWithChildren) => {
 
         setLists(updatedLists);
     };
+
+
+
+    const taskCompleted = (listId: number, taskId: number) => {
+        const updatedLists = lists.map(list => {
+            if (list.id == listId) {
+                const updatedTasks = list.tasks.map(task => {
+
+                    if (task.id === taskId) { return { ...task, completed: !task.completed }; } return task;
+                }); return { ...list, tasks: updatedTasks };
+
+            }
+
+            return list; // Si la liste ne correspond pas, on la laisse inchangée
+        })
+        setLists(updatedLists);
+    }
+
+
     const removeTask = (listId: number, taskId: number) => {
         setLists((prevLists) =>
             prevLists.map((list) => {
@@ -94,24 +113,6 @@ export const ListContextProvider = ({ children }: PropsWithChildren) => {
             })
         );
     }
-
-    const taskCompleted = (listId: number, taskId: number) => {
-        const updatedLists = lists.map(list => {
-            if (list.id !== listId) {
-                const updatedTasks = list.tasks.map(task => {
-
-                    if (task.id !== taskId) { return { ...task, completed: !task.completed }; } return task;
-                }); return { ...list, tasks: updatedTasks };
-
-            }
-
-            return list; // Si la liste ne correspond pas, on la laisse inchangée
-        })
-        setLists(updatedLists);
-    }
-
-
-
 
     return (
 

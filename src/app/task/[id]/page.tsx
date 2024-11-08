@@ -44,6 +44,7 @@ const OneTaskList: React.FC = () => {
         const taskId = Number(event.currentTarget.getAttribute('data-task-delete'))
         removeTask(Number(id), taskId)
     }
+
     return (
         <div>
             <h1 className="font-bold text-4xl text-center mb-8">Liste n°{theList?.id} : {theList?.title} </h1>
@@ -68,7 +69,7 @@ const OneTaskList: React.FC = () => {
                                 {task.content}
                                 <span className="ml-5">
                                     <Button className="w-auto  h-6 bg-emerald-500 hover:bg-emerald-600" data-task-id={task.id} onClick={handleCompleted}><Check height={15} className="text-black font-bold" /></Button>
-                                    <Button className=" w-auto  h-6 bg-red-600 hover:bg-red-700 " data-task-delete={task.id} onClick={handleRemoveTask}><X height={15} /></Button>
+                                    <Button className=" w-auto  h-6 bg-red-600 hover:bg-red-700 " data-task-delete={task.id} onClick={handleRemoveTask} ><X height={15} /></Button>
                                 </span>
                             </li>
 
