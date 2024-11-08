@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar/page";
 const RootTemplate = ({ children }: PropsWithChildren) => {
     return (
 
+
         <ListContextProvider>
             <Navbar />
             {children}

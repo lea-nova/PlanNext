@@ -12,7 +12,8 @@ interface listContextType {
     addList(list: Omit<listType, "id">): void
     removeList(listId: listType['id']): void
     addTaskToList(listId: number, newTask: string): void,
-    taskCompleted(listId: number, taskId: number, changeBool: boolean): void
+    taskCompleted(listId: number, taskId: number, changeBool: boolean): void,
+    removeTask(listId: number, taskId: number): void
 
 }
 
@@ -78,13 +79,28 @@ export const ListContextProvider = ({ children }: PropsWithChildren) => {
 
         setLists(updatedLists);
     };
+    const removeTask = (listId: number, taskId: number) => {
+        setLists((prevLists) =>
+            prevLists.map((list) => {
+                // Si c'est la liste ciblée, on modifie ses tâches
+                if (list.id === listId) {
+                    return {
+                        ...list,
+                        tasks: list.tasks.filter((task) => task.id !== taskId), // Exclut la tâche ciblée
+                    };
+                }
+                // Sinon, on retourne la liste sans modification
+                return list;
+            })
+        );
+    }
 
-    const taskCompleted = (listId: number, taskId: number, changeBool: boolean) => {
+    const taskCompleted = (listId: number, taskId: number) => {
         const updatedLists = lists.map(list => {
-            if (list.id == listId) {
+            if (list.id !== listId) {
                 const updatedTasks = list.tasks.map(task => {
 
-                    if (task.id === taskId) { return { ...task, completed: !task.completed }; } return task;
+                    if (task.id !== taskId) { return { ...task, completed: !task.completed }; } return task;
                 }); return { ...list, tasks: updatedTasks };
 
             }
@@ -99,7 +115,7 @@ export const ListContextProvider = ({ children }: PropsWithChildren) => {
 
     return (
 
-        <ListContext.Provider value={{ lists, addList, removeList, addTaskToList, taskCompleted }}>
+        <ListContext.Provider value={{ lists, addList, removeList, addTaskToList, taskCompleted, removeTask }}>
             {children}
         </ListContext.Provider>
     )

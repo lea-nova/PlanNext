@@ -1,9 +1,11 @@
 'use client'
 
 // import { useState } from "react";
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    label?: string;
+}
 
-
-const Input = (props) => {
+const Input = (props: InputProps) => {
     // const [valueInput, setValueInput] = useState<string>('');
     return (
         <span>

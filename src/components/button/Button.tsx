@@ -26,7 +26,7 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
         if (route) {
             router.push(route);
         }
-    }, [router, route])
+    }, [router, route, onClick])
     // useMemo ne change qu'une fois on change variant. 
     const buttonClass = useMemo(() => {
         const klass: string[] = [];
