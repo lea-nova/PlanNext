@@ -1,35 +1,37 @@
 import { createContext, PropsWithChildren, useCallback, useEffect, useState } from "react";
 
-interface Task {
+
+export interface Task {
     id: number,
+    listId?: number,
     content: string,
-    completed: boolean
+    completed?: boolean,
 }
 
-interface listContextType {
-    lists: listType[]
+interface ListContextType {
+    lists: ListType[]
+    setLists(lists: ListContextType["lists"]): void,
     // signature de fonction
-    addList(list: Omit<listType, "id">): void
-    removeList(listId: listType['id']): void
-    addTaskToList(listId: number, newTask: string): void,
-    taskCompleted(listId: number, taskId: number, changeBool: boolean): void,
-    removeTask(listId: number, taskId: number): void
+    addList(list: Omit<ListType, "id">): void
+    removeList(listId: ListType['id']): void
+
 
 }
 
-interface listType {
+export interface ListType {
     id: number,
     title: string,
+    // Ici je peux enlever le tasks ou alors je mets un tableau d'id. Mais si je mets déjà les listId das les tâches pas besoin ici d'une collection de Task. 
     tasks: Task[]
 }
 
 // state global 
-export const ListContext = createContext<listContextType | undefined>(undefined)
+export const ListContext = createContext<ListContextType | undefined>(undefined)
 
 // renvoi contexte
 export const ListContextProvider = ({ children }: PropsWithChildren) => {
     // récupérer depuis l'interface 
-    const [lists, setLists] = useState<listContextType["lists"]>([]);
+    const [lists, setLists] = useState<ListContextType["lists"]>([]);
     const [listLoaded, setListLoaded] = useState<boolean>(false);
     // const [tasks, setTasks] = useState<Task[]>([]);
     useEffect(() => {
@@ -51,7 +53,7 @@ export const ListContextProvider = ({ children }: PropsWithChildren) => {
         localStorage.setItem('lists', JSON.stringify(lists))
     }, [lists, listLoaded]);
 
-    const addList = useCallback<listContextType["addList"]>((newList) => {
+    const addList = useCallback<ListContextType["addList"]>((newList) => {
         setLists((lists) => {
             const newId = lists.reduce((curr, { id }) => {
                 return Math.max(curr, id)
@@ -60,63 +62,13 @@ export const ListContextProvider = ({ children }: PropsWithChildren) => {
         })
     }, []);
 
-    const removeList = useCallback<listContextType["removeList"]>((listId) => {
+    const removeList = useCallback<ListContextType["removeList"]>((listId) => {
         setLists((lists) => lists.filter(({ id }) => id !== listId));
     }, []);
 
-
-    const addTaskToList = (listId: number, content: string) => {
-        const updatedLists = lists.map(list => {
-            if (list.id == listId) {
-                const newId = list.tasks.reduce((curr, { id }) => {
-                    return Math.max(curr, id)
-                }, 0) + 1
-                const newTask: Task = { id: newId, content: content, completed: false };
-                return { ...list, tasks: [...(list.tasks) || [], newTask] };
-            }
-            return list;
-        })
-
-        setLists(updatedLists);
-    };
-
-
-
-    const taskCompleted = (listId: number, taskId: number) => {
-        const updatedLists = lists.map(list => {
-            if (list.id == listId) {
-                const updatedTasks = list.tasks.map(task => {
-
-                    if (task.id === taskId) { return { ...task, completed: !task.completed }; } return task;
-                }); return { ...list, tasks: updatedTasks };
-
-            }
-
-            return list; // Si la liste ne correspond pas, on la laisse inchangée
-        })
-        setLists(updatedLists);
-    }
-
-
-    const removeTask = (listId: number, taskId: number) => {
-        setLists((prevLists) =>
-            prevLists.map((list) => {
-                // Si c'est la liste ciblée, on modifie ses tâches
-                if (list.id === listId) {
-                    return {
-                        ...list,
-                        tasks: list.tasks.filter((task) => task.id !== taskId), // Exclut la tâche ciblée
-                    };
-                }
-                // Sinon, on retourne la liste sans modification
-                return list;
-            })
-        );
-    }
-
     return (
 
-        <ListContext.Provider value={{ lists, addList, removeList, addTaskToList, taskCompleted, removeTask }}>
+        <ListContext.Provider value={{ lists, setLists, addList, removeList }}>
             {children}
         </ListContext.Provider>
     )

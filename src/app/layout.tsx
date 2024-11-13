@@ -36,11 +36,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
 
-        <main className="  flex flex-col ">
+        <main className="  flex flex-col min-h-screen">
           {children}
 
         </main>
-        <footer> <p>&copy; 2024 PlanNext.</p></footer>
+        <footer className="p-4"> <p>&copy; 2024 PlanNext.</p></footer>
       </body>
     </html>
   );

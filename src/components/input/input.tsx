@@ -9,7 +9,10 @@ const Input = (props: InputProps) => {
     // const [valueInput, setValueInput] = useState<string>('');
     return (
         <span>
-            <label htmlFor={props.name}>{props.label}</label>
+            <label
+                htmlFor={props.name}>
+                {props.label}
+            </label>
             <input
                 type={props.type}
                 name={props.name}
