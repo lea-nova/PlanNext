@@ -10,16 +10,16 @@ import { TaskContext } from "@/context/task";
 // }
 
 const OneTaskList: React.FC = () => {
-    const { list, addTaskToList, toggleTaskCompletion, removeTask, tasksToLocal } = useContext(TaskContext)!;
+    const { list, addTaskToList, toggleTaskCompletion, removeTask, tasks } = useContext(TaskContext)!;
     const [newTask, setNewTask] = useState<string>('');
 
-    // console.log(tasksToLocal);
-    // tasksToLocal.forEach(element => {
+    // console.log(tasks);
+    // tasks.forEach(element => {
     //     console.log(element);
 
     // });
-    const taskToTheList = tasksToLocal.find((t) => t.listId === list?.id)
-    console.log(taskToTheList);
+    // const taskToTheList = tasks.find((t) => t.listId === list?.id)
+    // console.log(taskToTheList);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewTask(e.target.value);
     };
@@ -71,7 +71,7 @@ const OneTaskList: React.FC = () => {
                 </form>
                 <ul
                     className="mt-5">
-                    {list?.tasks.map((task) => {
+                    {tasks.map((task) => {
                         return (
                             <li
                                 key={task.id}

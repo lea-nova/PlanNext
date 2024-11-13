@@ -1,102 +1,72 @@
 // import Input from "@/components/input/input";
 import { createContext, useContext, PropsWithChildren, useMemo, useCallback, useState, useEffect } from "react";
-import ListContext, { ListType, Task } from "./list";
+import ListContext from "./list";
+import { ListType, Task } from "@/types";
+import { TaskList } from "@/class/TaskList";
 
 
 interface TaskContextType {
     list?: ListType,
-    addTaskToList: (task: Omit<Task, 'id'>) => void,
+    addTaskToList: (task: Omit<Task, 'id' | 'listId'>) => void,
     removeTask: (taskId: number) => void,
     toggleTaskCompletion: (taskId: number) => void,
-    tasksToLocal: Task[]
+    tasks: Task[]
 }
 
 interface TaskContextProviderProps {
     listId: number
 }
 
-interface TasksToLocalType {
-    id?: number,
-    listId: number,
-    content: string,
-    completed: boolean
-}
+// interface TasksToLocalType {
+//     id?: number,
+//     listId?: number,
+//     content: string,
+//     completed: boolean
+// }
 
 export const TaskContext = createContext<TaskContextType | undefined>(undefined)
 
 export const TaskContextProvider = ({ children, listId }: PropsWithChildren<TaskContextProviderProps>) => {
-    const [tasksToLocal, setTasksToLocal] = useState<TasksToLocalType[]>([]);
-    // Récupérer toutes les listes présentes dans le localStorage
+    const [allTasks, setAllTasks] = useState<Task[]>([]);
+    const [isLoaded, setIsLoaded] = useState<boolean>();
+    const tasks = useMemo(() => allTasks.filter((task) => task.listId === listId), [allTasks, listId])
 
     // Récupération des tâches du localStorage au montage initial 
     useEffect(() => {
-        const savedTasks = localStorage.getItem('tasks');
-        if (savedTasks) {
-            console.log("Tâche récupérées du localSto : ", JSON.parse(savedTasks));
-            setTasksToLocal(JSON.parse(savedTasks));
-        }
+
+        setAllTasks(TaskList.getTasks());
+
+        setIsLoaded(true);
     }, []);
     // Sauvegarde des tâches dans le localStorage lorsque l'état change
     useEffect(() => {
-        if (tasksToLocal) {
-            console.log("Tâches sauvegardées dans le localStorage : ", tasksToLocal);
-            localStorage.setItem('tasks', JSON.stringify(tasksToLocal));
+        if (isLoaded) {
+            console.log("à save dans le  localStorage : ", allTasks);
+            TaskList.setTasks(allTasks);
+            // localStorage.setItem('tasks', JSON.stringify(allTasks));
         }
-    }, [tasksToLocal]);
-    const { lists, setLists } = useContext(ListContext)!;
+    }, [isLoaded, allTasks]);
+    const { lists } = useContext(ListContext)!;
 
     const list = useMemo(() => lists.find((l) => l.id === listId), [lists, listId]);
 
-    // const tasks = list ? list.tasks : [];
-    // const [task, setTask] = useState<string[]>([]);
-    // const [newTask, setNewTask] = useState<string>('');
 
 
     const addTaskToList = useCallback<TaskContextType["addTaskToList"]>((task) => {
-        const updatedLists: ListType[] = lists.map(list => {
-            if (list.id == listId) {
-                const newId = list.tasks.reduce((curr, { id }) => {
-                    return Math.max(curr, id)
-                }, 0) + 1
-                const newTask: Task = { id: newId, listId: list.id, ...task };
-                setTasksToLocal([...tasksToLocal, newTask])
-                return { ...list, tasks: [...list.tasks, newTask] };
-            }
-            return list;
-        })
+        setAllTasks(TaskList.addTask({ ...task, listId }))
 
-        setLists(updatedLists);
-    }, [listId, lists, setLists, setTasksToLocal, tasksToLocal]);
+    }, [listId]);
 
     const removeTask = useCallback<TaskContextType["removeTask"]>((taskId) => {
-        const updatedLists: ListType[] = lists.map(list => {
-            if (list.id == listId) {
-                const newTask: Task[] = list.tasks.filter((task) => task.id !== taskId)
-                setTasksToLocal(newTask)
-                return { ...list, tasks: newTask }
-            }
-            return list;
-        })
-
-        setLists(updatedLists)
-    }, [listId, lists, setLists, tasksToLocal])
+        setAllTasks(TaskList.removeTask(taskId));
+    }, [])
 
     const toggleTaskCompletion = useCallback<TaskContextType["toggleTaskCompletion"]>((taskId) => {
-        const updatedLists = lists.map(list => {
-            if (list.id == listId) {
-                const updatedTasks = list.tasks.map(task => {
+        setAllTasks(TaskList.toggleTaskCompletion(taskId));
 
-                    if (task.id === taskId) { return { ...task, completed: !task.completed }; } return task;
-                }); return { ...list, tasks: updatedTasks };
-
-            }
-
-            return list; // Si la liste ne correspond pas, on la laisse inchangée
-        })
-        setLists(updatedLists);
-    }, [listId, lists, setLists])
+    }, [])
     return (
-        <TaskContext.Provider value={{ list, addTaskToList, removeTask, toggleTaskCompletion, tasksToLocal }}>
+        <TaskContext.Provider value={{ list, addTaskToList, removeTask, toggleTaskCompletion, tasks }}>
 
             {children}
         </TaskContext.Provider>

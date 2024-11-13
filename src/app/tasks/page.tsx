@@ -5,18 +5,19 @@ import { Plus } from 'lucide-react';
 import { X } from 'lucide-react';
 
 import ListContext from "@/context/list";
-
 // import Link from "next/link";
 
 // interface Task {
 //   id: number,
-//   content: string
+//   listId: number,
+//   content: string,
+//   completed: boolean,
 // }
 
 const TasksLists: React.FC = ({ }) => {
   // Tableau pour stocker toutes les listes de tâches. 
 
-  const { addList, lists, removeList } = useContext(ListContext)!;
+  const { addList, lists, removeList, } = useContext(ListContext)!;
 
   const memoLists = useMemo(() => lists, [lists]);
 
@@ -25,8 +26,8 @@ const TasksLists: React.FC = ({ }) => {
 
   const handleAddList = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addList({ title: newListTitle, tasks: tasks });
-    // addList({ title: newListTitle });
+    // addList({ title: newListTitle, tasks: tasks });
+    addList({ title: newListTitle });
     setNewListTitle('');
   };
 
