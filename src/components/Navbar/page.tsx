@@ -1,5 +1,5 @@
 import Link from "next/link";
-// import Logo from "../Logo/Logo";
+import Logo from "../Logo/Logo";
 
 const Navbar = () => {
 
@@ -13,15 +13,15 @@ const Navbar = () => {
                     > */}<span className="flex flex-row justify-between items-center  w-full">
 
                         <Link href="/" title="Retour à l'accueil." className="text-zinc-800 hover:font-medium hover:text-zinc-900">
-                            Logo
-                            {/* <Logo
+
+                            <Logo
                                 alt="Logo de l'application Plan Next"
-                                src="/images/plan_next.jpeg"
-                                className="rounded-full ml-5 "
+                                src="/images/plan_next_logo.png"
+                                className="rounded-sm ml-5 "
                                 width={50}
                                 height={50}
                                 style={{ objectFit: "contain" }}
-                            /> */}
+                            />
                         </Link>
                         {/* <Link href="/" className="text-zinc-800 hover:text-black text-lg scale-100 hover:scale-110 transition ease-in-out duration-500 hover:font-medium ">Voir toutes les listes</Link> */}
                     </span>
