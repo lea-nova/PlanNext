@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import React from "react";
+// import IBMPlexSans from "next/font/local";
 
 
 const geistSans = localFont({
@@ -16,6 +17,8 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -32,16 +35,22 @@ export default function RootLayout({
       <head>
         <title>Taskify - La clé d’une gestion efficace </title>
       </head>
+      {/* <body
+        className={` ${IBMPlexSansBold.variable} antialiased `}
+      > */}
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        // className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-tr from-[#FAF8D4] via-[#E2D4FA] to-[#7C66A5]`}
+        // className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#E3DFF2]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#e9e5fa]`}
+      // className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#fffee8]`}
       >
 
-        <main className="  flex flex-col min-h-screen">
+        <main className="  flex flex-col min-h-screen ">
           {children}
 
         </main>
-        <footer className="p-4"> <p>&copy; 2024 PlanNext.</p></footer>
+        <footer className="text-center "> <p>&copy; 2024 PlanNext.</p></footer>
       </body>
-    </html>
+    </html >
   );
 }

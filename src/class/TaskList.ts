@@ -19,7 +19,6 @@ export abstract class TaskList {
         const id = lists.reduce((curr, { id }) => {
             return Math.max(curr, id)
         }, 0) + 1
-
         return TaskList.setLists([...lists, { id, ...newList }])
     }
 

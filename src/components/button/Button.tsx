@@ -39,7 +39,7 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
                 klass.push("bg-purple-600 hover:bg-slate-600 text-black");
                 break;
         }
-        klass.push("h-[4rem]  w-[9rem] rounded-md text-white text-lg font-medium");
+        klass.push(" rounded-md  text-lg font-medium");
         klass.push(className);
         return klass.join(' ');
     }, [variant, className])

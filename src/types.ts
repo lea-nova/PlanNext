@@ -1,6 +1,7 @@
 export interface ListType {
     id: number,
     title: string,
+
 }
 
 export interface Task {
@@ -8,4 +9,5 @@ export interface Task {
     listId: number,
     content: string,
     completed?: boolean,
+
 }
