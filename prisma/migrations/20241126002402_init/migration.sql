@@ -1,0 +1,13 @@
+-- CreateTable
+CREATE TABLE "List" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "title" TEXT NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Task" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "content" TEXT NOT NULL,
+    "completed" BOOLEAN NOT NULL,
+    CONSTRAINT "Task_id_fkey" FOREIGN KEY ("id") REFERENCES "List" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);

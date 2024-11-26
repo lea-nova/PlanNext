@@ -32,11 +32,11 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
         const klass: string[] = [];
         switch (variant) {
             case "white":
-                klass.push("bg-gray-800 text-black hover:bg-gray-900");
+                klass.push("text-black ");
                 break;
             case "purple":
             default:
-                klass.push("bg-purple-600 hover:bg-slate-600 text-black");
+                klass.push(" text-black");
                 break;
         }
         klass.push(" rounded-md  text-lg font-medium");

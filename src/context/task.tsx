@@ -33,11 +33,10 @@ export const TaskContextProvider = ({ children, listId }: PropsWithChildren<Task
 
     // Récupération des tâches du localStorage au montage initial 
     useEffect(() => {
-
         setAllTasks(TaskList.getTasks());
-
         setIsLoaded(true);
     }, []);
+
     // Sauvegarde des tâches dans le localStorage lorsque l'état change
     useEffect(() => {
         if (isLoaded) {
@@ -65,6 +64,7 @@ export const TaskContextProvider = ({ children, listId }: PropsWithChildren<Task
         setAllTasks(TaskList.toggleTaskCompletion(taskId));
 
     }, [])
+
     return (
         <TaskContext.Provider value={{ list, addTaskToList, removeTask, toggleTaskCompletion, tasks }}>
 
@@ -72,3 +72,4 @@ export const TaskContextProvider = ({ children, listId }: PropsWithChildren<Task
         </TaskContext.Provider>
     )
 }
+export default TaskContext;

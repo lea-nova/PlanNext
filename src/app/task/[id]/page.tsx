@@ -13,13 +13,6 @@ const OneTaskList: React.FC = () => {
     const { list, addTaskToList, toggleTaskCompletion, removeTask, tasks } = useContext(TaskContext)!;
     const [newTask, setNewTask] = useState<string>('');
 
-    // console.log(tasks);
-    // tasks.forEach(element => {
-    //     console.log(element);
-
-    // });
-    // const taskToTheList = tasks.find((t) => t.listId === list?.id)
-    // console.log(taskToTheList);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewTask(e.target.value);
     };
@@ -46,6 +39,7 @@ const OneTaskList: React.FC = () => {
         const taskId = Number(event.currentTarget.getAttribute('data-task-delete'))
         removeTask(taskId)
     }
+
 
     return (
         <div>
