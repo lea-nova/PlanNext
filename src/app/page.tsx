@@ -1,10 +1,12 @@
 'use client'
 import Button from "@/components/button/Button";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Plus } from 'lucide-react';
 import { Trash2 } from 'lucide-react';
-
+import fetchLists from "./lists/page";
 import ListContext from "@/context/list";
+import { ListType } from "@/types";
+
 // import Link from "next/link";
 
 // interface Task {
@@ -16,17 +18,19 @@ import ListContext from "@/context/list";
 
 const TasksLists: React.FC = ({ }) => {
   // Tableau pour stocker toutes les listes de tâches. 
+  const [listsFromDB, setListsFromDB] = useState<ListType[]>([]);
+  const { addList, lists, removeList } = useContext(ListContext)!;
 
-  const { addList, lists, removeList, } = useContext(ListContext)!;
+
 
   const memoLists = useMemo(() => lists, [lists]);
-
+  // setListsFromDB(memoLists)
   const [newListTitle, setNewListTitle] = useState<string>('');
   // const [tasks, setTasks] = useState<Task[]>([]);
 
   const handleAddList = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // addList({ title: newListTitle, tasks: tasks });
+
     addList({ title: newListTitle });
     setNewListTitle('');
   };
@@ -36,19 +40,40 @@ const TasksLists: React.FC = ({ }) => {
   };
 
   const handleListsTitle = () => {
-    return memoLists.length ? "Voir toutes les listes" : "";
+    return memoLists?.length ? "Voir toutes les listes" : "";
 
   }
 
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const lists = await fetchLists(); // Résolution de la Promise
+  //     // Maintenant vous pouvez utiliser .map
+  //     setListsFromDB(lists);
+  //   };
+
+  //   fetchData();
+
+
+
+  // }, []);
+
 
   return (
     <div className="">
+      {/* <ul>
+
+        {listsFromDB.map((list) =>
+          <li key={list.id}> <b>{list.id} : </b>{list.title}</li>
+        )}
+      </ul> */}
+
       <h1
         className="  font-bold max-md:text-6xl text-8xl text-center mt-10 " >
         Plan Next
       </h1>
       <h2 className="text-center  max-md:text-xl text-3xl font-semibold   ">Un esprit clair, une liste à jour</h2>
+
 
       <form
         className=" w-5/6 md:mt-16  md:w-3/6 mx-auto h-[18rem] flex flex-col justify-center items-center "
@@ -79,6 +104,7 @@ const TasksLists: React.FC = ({ }) => {
       >
         <ol
           className=" w-[90%] md:w-[80%] lg:w-[60%] m-auto  grid max-md:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-3 md:gap-5  justify-center ">
+
           {memoLists.map((list) => (
             <li key={list.id} >
               <div

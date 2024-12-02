@@ -2,8 +2,6 @@ import { TaskList } from "@/class/TaskList";
 import { ListType } from "@/types";
 import { createContext, PropsWithChildren, useCallback, useEffect, useState } from "react";
 
-
-
 interface ListContextType {
     lists: ListType[]
     setLists(lists: ListContextType["lists"]): void,
@@ -23,8 +21,15 @@ export const ListContextProvider = ({ children }: PropsWithChildren) => {
     const [lists, setLists] = useState<ListContextType["lists"]>([]);
     const [listLoaded, setListLoaded] = useState<boolean>(false);
     // const [tasks, setTasks] = useState<Task[]>([]);
+
+    const listFromDb = async () => {
+        const listsInDb = await TaskList.getLists();
+        // console.log(listsInDb);
+
+        setLists(listsInDb);
+    }
     useEffect(() => {
-        setLists(TaskList.getLists())
+        listFromDb();
         setListLoaded(true);
     }, [])
 
@@ -34,20 +39,21 @@ export const ListContextProvider = ({ children }: PropsWithChildren) => {
             return
         }
 
-        TaskList.setLists(lists);
+        TaskList.getLists();
     }, [lists, listLoaded]);
 
-    const addList = useCallback<ListContextType["addList"]>((newList) => {
-        setLists(TaskList.addList(newList))
+    const addList = useCallback<ListContextType["addList"]>(async (newList) => {
+        setLists(await TaskList.addList(newList))
     }, []);
 
-    const removeList = useCallback<ListContextType["removeList"]>((listId) => {
-        setLists(TaskList.removeList(listId));
+    const removeList = useCallback<ListContextType["removeList"]>(async (listId) => {
+        setLists(await TaskList.removeList(listId));
     }, []);
 
     return (
 
         <ListContext.Provider value={{ lists, setLists, addList, removeList }}>
+
             {children}
         </ListContext.Provider>
     )
