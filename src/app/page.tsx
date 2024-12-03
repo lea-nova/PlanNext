@@ -1,11 +1,11 @@
 'use client'
 import Button from "@/components/button/Button";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { Plus } from 'lucide-react';
 import { Trash2 } from 'lucide-react';
-import fetchLists from "./lists/page";
+// import fetchLists from "./lists/page";
 import ListContext from "@/context/list";
-import { ListType } from "@/types";
+// import { ListType } from "@/types";
 
 // import Link from "next/link";
 
@@ -18,7 +18,7 @@ import { ListType } from "@/types";
 
 const TasksLists: React.FC = ({ }) => {
   // Tableau pour stocker toutes les listes de tâches. 
-  const [listsFromDB, setListsFromDB] = useState<ListType[]>([]);
+  // const [listsFromDB, setListsFromDB] = useState<ListType[]>([]);
   const { addList, lists, removeList } = useContext(ListContext)!;
 
 
@@ -27,6 +27,7 @@ const TasksLists: React.FC = ({ }) => {
   // setListsFromDB(memoLists)
   const [newListTitle, setNewListTitle] = useState<string>('');
   // const [tasks, setTasks] = useState<Task[]>([]);
+
 
   const handleAddList = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,28 +46,11 @@ const TasksLists: React.FC = ({ }) => {
   }
 
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const lists = await fetchLists(); // Résolution de la Promise
-  //     // Maintenant vous pouvez utiliser .map
-  //     setListsFromDB(lists);
-  //   };
-
-  //   fetchData();
-
-
-
-  // }, []);
 
 
   return (
     <div className="">
-      {/* <ul>
 
-        {listsFromDB.map((list) =>
-          <li key={list.id}> <b>{list.id} : </b>{list.title}</li>
-        )}
-      </ul> */}
 
       <h1
         className="  font-bold max-md:text-6xl text-8xl text-center mt-10 " >

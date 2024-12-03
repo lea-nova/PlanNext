@@ -22,5 +22,5 @@ model Task {
   listId    Int
   list      List    @relation(fields: [listId], references: [id])
   content   String
-  completed Boolean
+  completed Boolean @default(false)
 }
