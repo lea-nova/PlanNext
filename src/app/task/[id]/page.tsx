@@ -17,9 +17,12 @@ const OneTaskList: React.FC = () => {
         setNewTask(e.target.value);
     };
 
+
+
     const handleAddTask = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setNewTask("");
+
         addTaskToList({ content: newTask });
 
     }
@@ -38,8 +41,8 @@ const OneTaskList: React.FC = () => {
     const handleRemoveTask = (event: React.MouseEvent<HTMLButtonElement>) => {
         const taskId = Number(event.currentTarget.getAttribute('data-task-delete'))
         removeTask(taskId)
-    }
 
+    }
 
     return (
         <div>
