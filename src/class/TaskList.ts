@@ -37,20 +37,23 @@ export class TaskList {
     }
 
     static async removeList(listId: ListType['id']) {
-        // const lists = await TaskList.getLists();
+
+        // Je récupère mes tâches.
+        // Je delete les tasks.
+        // J'appelle ma méthode pour accéder à l'endpoint en envoyant l'ID de la liste. 
+        // Après la réponse de l'API je
+        // const newLists = lists.filter(({ id }) => id !== listId);
+        const tasksById = await TaskList.getTasksByListId(listId);
+        tasksById.map(task => {
+            TaskList.removeTask(task.id);
+
+        });
         const listIdToDelete = await fetch(`${TaskList.baseUrl}/api/lists/${listId}`, {
             method: "DELETE"
         });
         if (!listIdToDelete) {
             console.log("Erreur la liste ne s'est pas effacé correctement.");
         }
-
-        // const newLists = lists.filter(({ id }) => id !== listId);
-        // const tasksById = TaskList.getTasksByListId(listId);
-        // tasksById.forEach(task => {
-        //     TaskList.removeTask(task.id);
-        // });
-
         return TaskList.getLists();
 
     }
@@ -71,6 +74,7 @@ export class TaskList {
     // }
 
     static async getTasksByListId(listId: ListType['id']) {
+
         const allTasks = await TaskList.getTasks();
         const tasksByListId = [];
         for (const task of allTasks) {
@@ -136,34 +140,41 @@ export class TaskList {
     }
 
 
-    static async toggleTaskCompletion(taskId: Task['id']): Promise<Task | null> {
+    static async toggleTaskCompletion(taskId: number) {
         try {
-            // Récupération de la tâche existante
+            // Récupérer la tâche depuis la base de données
             const taskFromDb = await fetch(`${this.baseUrl}/api/tasks/${taskId}`);
             if (!taskFromDb.ok) {
-                console.error('Erreur lors de la récupération de la tâche');
-                return null;
+                throw new Error('Tâche non trouvée');
             }
 
             const task = await taskFromDb.json();
+            const updatedTask = { ...task, completed: task.completed };
+            // const updatedTask = { ...task, completed: !task.completed };
 
-            // Mise à jour de la tâche
+            // Mise à jour de la tâche dans la base de données
             const response = await fetch(`${this.baseUrl}/api/tasks/${taskId}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...task, completed: task.completed }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    completed: !updatedTask.completed, // Mettre à jour seulement l'état 'completed'
+                }),
             });
 
             if (!response.ok) {
-                console.error('Erreur lors de la mise à jour de la tâche');
-                return null;
+                throw new Error('Erreur lors de la mise à jour de la tâche');
             }
 
-            // Retourner la tâche mise à jour (pas besoin de refetch)
-            return { ...task, completed: task.completed };
+            // Récupérer la tâche mise à jour de la base de données
+            const taskUpdated = await response.json();
+
+            console.log('Tâche mise à jour :', taskUpdated);
+            return taskUpdated; // Retourner la tâche mise à jour
         } catch (error) {
             console.error('Erreur dans toggleTaskCompletion:', error);
-            return null;
+            throw error; // Relancer l'erreur pour pouvoir la gérer plus haut
         }
     }
 

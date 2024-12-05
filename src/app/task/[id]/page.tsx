@@ -41,6 +41,7 @@ const OneTaskList: React.FC = () => {
     const handleRemoveTask = (event: React.MouseEvent<HTMLButtonElement>) => {
         const taskId = Number(event.currentTarget.getAttribute('data-task-delete'))
         removeTask(taskId)
+
     }
 
     return (

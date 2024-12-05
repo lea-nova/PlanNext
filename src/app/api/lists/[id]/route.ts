@@ -6,8 +6,16 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request, { params }: { params: { id: string } }) {
     const id = parseInt(params.id, 10);
     const response = await prisma.list.findUnique({
-        where: { id }
+        where: { id: id }
     });
+    if (response?.id) {
+        const tasksOfOneList = await prisma.task.findMany({
+            where: { listId: response.id }
+        })
+        if (!tasksOfOneList) {
+            console.log("Erreur tâches non trouvée");
+        }
+    }
     return NextResponse.json(response);
 
 }

@@ -89,10 +89,10 @@ export const TaskContextProvider = ({ children, listId }: PropsWithChildren<Task
 
         setAllTasks((prevTasks) =>
             prevTasks.map((task) =>
-                task.id === taskId ? { ...task, completed: !task.completed } : task
+                task.id === updatedTask.id ? updatedTask : task // Remplacer la tâche modifiée dans la liste
             )
         );
-
+        return updatedTask
     }, []);
 
     return (
